@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+  </head>
+  <body>
+    <div id="app">
+      <h2>寵物相簿</h2>
+      <div class="gallery">
+        <!-- 動態綁定 src 和 alt -->
+        <img src="" alt="" class="pet-image" />
+
+        <div class="controls">
+          <button @click="prevPet">上一張</button>
+          <span>{{ currentIndex + 1 }} / {{ pets.length }}</span>
+          <button @click="nextPet">下一張</button>
+        </div>
+
+        <p class="pet-name"><!-- 顯示寵物名稱 --></p>
+      </div>
+    </div>
+
+    <script>
+      const { createApp } = Vue;
+
+      createApp({
+        data() {
+          return {
+            currentIndex: 0,
+            pets: [
+              {
+                name: "小橘",
+                image:
+                  "https://plus.unsplash.com/premium_photo-1707353401897-da9ba223f807?q=80&w=870&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+              },
+              {
+                name: "阿花",
+                image: "https://cdn2.ettoday.net/images/4223/d4223999.jpg",
+              },
+              {
+                name: "黑皮",
+                image:
+                  "https://res.klook.com/images/fl_lossy.progressive,q_65/c_fill,w_1280,h_863/w_79,x_14,y_14,g_south_west,l_Klook_water_br_trans_yhcmh3/activities/tvs44x3rx2tsdd1h0nhv/%E6%A9%AB%E6%BF%B1%E9%BA%B5%E5%8C%85%E8%B6%85%E4%BA%BA%E5%85%92%E7%AB%A5%E5%8D%9A%E7%89%A9%E9%A4%A8.jpg",
+              },
+            ],
+          };
+        },
+        computed: {
+          currentPet() {
+            return this.pets[this.currentIndex];
+          },
+        },
+        methods: {
+          prevPet() {
+            // 完成切換到上一張的邏輯
+            this.currentIndex =
+              this.currentIndex > 0
+                ? this.currentIndex - 1
+                : this.pets.length - 1;
+          },
+          nextPet() {
+            // 完成切換到下一張的邏輯
+            this.currentIndex =
+              this.currentIndex < this.pets.length - 1
+                ? this.currentIndex + 1
+                : 0;
+          },
+        },
+      }).mount("#app");
+    </script>
+
+    <style>
+      .gallery {
+        text-align: center;
+        max-width: 400px;
+      }
+      .pet-image {
+        width: 300px;
+        height: 200px;
+        object-fit: cover;
+        border-radius: 8px;
+      }
+      .controls {
+        margin: 15px 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 20px;
+      }
+      .pet-name {
+        font-size: 1.2em;
+        font-weight: bold;
+      }
+    </style>
+  </body>
+</html>

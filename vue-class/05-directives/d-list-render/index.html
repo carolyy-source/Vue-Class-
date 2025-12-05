@@ -15,6 +15,7 @@
       <div>
         <h4>寵物商店</h4>
         <ul>
+          <li v-for="pet in pets" :key="pet.id">{{pet.name}}</li>
           <li v-for="(pet, index) in pets" :key="index">
             {{ pet.emoji }} {{ pet.name }} - ${{ pet.price }}
             <button @click="adoptPet(index)">領養</button>
@@ -27,21 +28,21 @@
         data() {
           return {
             pets: [
-              { emoji: '🐱', name: '波斯貓', price: 300 },
-              { emoji: '🐕', name: '哈士奇', price: 400 },
-              { emoji: '🐰', name: '垂耳兔', price: 200 },
-              { emoji: '🐹', name: '倉鼠', price: 100 }
-            ]
-          }
+              { id: 1, emoji: "🐱", name: "波斯貓", price: 300 },
+              { id: 2, emoji: "🐕", name: "哈士奇", price: 400 },
+              { id: 3, emoji: "🐰", name: "垂耳兔", price: 200 },
+              { id: 4, emoji: "🐹", name: "倉鼠", price: 100 },
+            ],
+          };
         },
         methods: {
           adoptPet(index) {
             alert(
               `恭喜您領養了 ${this.pets[index].emoji}${this.pets[index].name}！`
-            )
-          }
-        }
-      }).mount('#list')
+            );
+          },
+        },
+      }).mount("#list");
     </script>
   </body>
 </html>

@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+  </head>
+  <body>
+    <div id="list">
+      <div v-for="item in items" :key="item.id">
+        <span>{{ item.emoji }} {{ item.name }}</span>
+        <input type="text" :placeholder="'輸入' + item.name" />
+        <button @click="removeItem(item.id)">刪除</button>
+      </div>
+    </div>
+    <script>
+      Vue.createApp({
+        data() {
+          return {
+            items: [
+              { id: 1, emoji: "🍎", name: "蘋果" },
+              { id: 2, emoji: "🍌", name: "香蕉" },
+              { id: 3, emoji: "🍊", name: "橘子" },
+            ],
+          };
+        },
+        methods: {
+          removeItem(id) {
+            this.items = this.items.filter((item) => item.id !== id);
+          },
+        },
+      }).mount("#list");
+    </script>
+  </body>
+</html>
