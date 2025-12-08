@@ -25,19 +25,25 @@
         <!-- 姓名 -->
         <div class="form-group">
           <label>姓名：</label>
-          <input type="text" placeholder="請輸入姓名" />
+          <input v-model="form.name" type="text" placeholder="請輸入姓名" />
         </div>
 
         <!-- Email -->
         <div class="form-group">
           <label>Email：</label>
-          <input type="email" placeholder="請輸入 Email" />
+          <input v-model="form.email" type="email" placeholder="請輸入 Email" />
         </div>
 
         <!-- 年齡 -->
         <div class="form-group">
           <label>年齡：</label>
-          <input type="number" placeholder="請輸入年齡" min="0" max="120" />
+          <input
+            v-model="form.age"
+            type="number"
+            placeholder="請輸入年齡"
+            min="0"
+            max="120"
+          />
         </div>
 
         <!-- 性別（單選） -->
@@ -45,15 +51,22 @@
           <label>性別：</label>
           <div class="radio-group">
             <!-- 單選按鈕 -->
+            <label v-for="gender in genders" :key="gender">
+              <input type="radio" v-model="form.gender" :value="gender" />
+              {{gender}}
+            </label>
           </div>
         </div>
 
         <!-- 縣市（下拉） -->
         <div class="form-group">
           <label>居住縣市：</label>
-          <select>
+          <select v-model="form.city">
             <option value="">請選擇</option>
             <!-- 選項 -->
+            <option :value="city" v-for="city in cities" :key="city">
+              {{city}}
+            </option>
           </select>
         </div>
 
@@ -62,25 +75,35 @@
           <label>興趣：</label>
           <div class="checkbox-group">
             <!-- 複選框 -->
+            <label v-for="(item, index) in interestOptions" :key="index">
+              <input type="checkbox" v-model="form.interests" :value="item" />
+              {{item}}
+            </label>
           </div>
         </div>
 
         <!-- 同意條款 -->
         <div class="form-group">
           <label class="agreement">
-            <input type="checkbox" />
+            <input type="checkbox" v-model="form.agreed" />
             我已閱讀並同意服務條款
           </label>
         </div>
 
         <!-- 提交按鈕 -->
-        <button type="submit">註冊</button>
+        <button type="submit" :disabled="!canSubmit">註冊</button>
       </form>
 
       <!-- 即時預覽 -->
       <div class="preview">
         <h3>填寫內容預覽</h3>
         <!-- 顯示所有填寫的內容 -->
+        <p>姓名:{{form.name}}</p>
+        <p>Email:{{form.email}}</p>
+        <p>年齡:{{form.age}}</p>
+        <p>性別:{{form.gender}}</p>
+        <p>居住縣市:{{form.city}}</p>
+        <p>興趣:{{form.interests.join("、")}}</p>
       </div>
     </div>
 
@@ -115,6 +138,14 @@
           canSubmit() {
             // 檢查是否可以提交
             // 條件：姓名、email、年齡、性別、城市都已填寫，且同意條款
+            return (
+              this.form.name &&
+              this.form.email &&
+              this.form.age &&
+              this.form.gender &&
+              this.form.city &&
+              this.form.agreed
+            );
           },
         },
         methods: {
