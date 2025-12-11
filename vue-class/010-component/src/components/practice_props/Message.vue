@@ -3,14 +3,35 @@
 // 1. 定義 type prop，限制只能是 'success', 'warning', 'error' 這三種類型
 // 2. 定義 title prop，設為必填
 // 3. 定義 content prop，給予預設值
+
+// defineProps(["type", "title", "content"]);
+
+// 法2 有型別檢查
+defineProps({
+  type: {
+    String,
+    validator: (value) => ["success" | "warning" | "error"].includes(value),
+  },
+  title: {
+    type: String,
+    required: true,
+  },
+  content: {
+    type: String,
+    default: "這是預設內容",
+  },
+});
 </script>
 
 <template>
-  <div class="message" :class="{
-    'message-success': type === 'success',
-    'message-warning': type === 'warning',
-    'message-error': type === 'error'
-  }">
+  <div
+    class="message"
+    :class="{
+      'message-success': type === 'success',
+      'message-warning': type === 'warning',
+      'message-error': type === 'error',
+    }"
+  >
     <h3>{{ title }}</h3>
     <p>{{ content }}</p>
   </div>
